@@ -1,10 +1,13 @@
 ﻿using API.Lanchonete.Domain.DTO;
-using API.Lanchonete.Domain.Entities;
 
 namespace API.Lanchonete.Domain.Interfaces.Business
 {
     public interface IPerfilBusiness
     {
-        Task<Perfil> CadastrarPerfil(PerfilDto perfil);
+        Task<PerfilDto> CadastrarPerfil(PerfilDto perfil);
+        Task AtualizarPerfil(PerfilDto perfil);
+        Task ExcluirPerfil(int idPerfil);
+        Task<PerfilDto> ObterPerfilPorId(int idPerfil);
+        Task<IEnumerable<PerfilDto>> ListarPerfis(PerfilFiltroDto perfilFiltro);
     }
 }

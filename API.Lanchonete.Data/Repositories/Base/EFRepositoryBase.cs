@@ -1,11 +1,6 @@
 ﻿using API.Lanchonete.Data.Context;
 using API.Lanchonete.Domain.Interfaces.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Lanchonete.Data.Repositories.Base
 {

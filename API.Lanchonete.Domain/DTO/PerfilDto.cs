@@ -2,7 +2,9 @@
 {
     public class PerfilDto
     {
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public int? IdPerfil { get; set; }
+        public required string Nome { get; set; }
+        public required string Descricao { get; set; }
+
     }
 }

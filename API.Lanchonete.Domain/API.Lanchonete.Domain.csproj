@@ -11,10 +11,6 @@
     <PackageReference Include="FluentValidation" Version="12.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <Nullable>enable</Nullable>
   </PropertyGroup>

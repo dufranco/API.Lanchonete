@@ -15,7 +15,7 @@ namespace API.Lanchonete.IoC
             #endregion
 
             #region Repository
-            services.AddScoped<IPerfilEFRepository, PerfilRepository>();
+            services.AddScoped<IPerfilEFRepository, PerfilEFRepository>();
             #endregion
 
             #region AutoMapper

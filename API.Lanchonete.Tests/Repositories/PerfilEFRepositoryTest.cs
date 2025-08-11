@@ -41,8 +41,9 @@ namespace API.Lanchonete.Tests.Repositories
             await repo.AtualizarPerfil(updateDto);
 
             var updated = await _context.Perfis.FindAsync(perfil.IdPerfil);
-            Assert.Equal("User2", updated.Nome);
-            Assert.Equal("Usuário 2", updated.Descricao);
+            Assert.NotNull(updated);
+            Assert.Equal("User2", updated!.Nome);
+            Assert.Equal("Usuário 2", updated!.Descricao);
         }
 
         [Fact]

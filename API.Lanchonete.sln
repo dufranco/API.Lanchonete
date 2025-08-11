@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Lanchonete.IoC", "API.L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Lanchonete.Tests", "API.Lanchonete.Tests\API.Lanchonete.Tests.csproj", "{6534987C-0171-4DE0-8201-EF79B657B483}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Lanchonete.Core", "API.Lanchonete.Core\API.Lanchonete.Core.csproj", "{299B804A-CC5B-4B8E-9CFB-59FDD0061DC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{6534987C-0171-4DE0-8201-EF79B657B483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6534987C-0171-4DE0-8201-EF79B657B483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6534987C-0171-4DE0-8201-EF79B657B483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{299B804A-CC5B-4B8E-9CFB-59FDD0061DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{299B804A-CC5B-4B8E-9CFB-59FDD0061DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{299B804A-CC5B-4B8E-9CFB-59FDD0061DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{299B804A-CC5B-4B8E-9CFB-59FDD0061DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

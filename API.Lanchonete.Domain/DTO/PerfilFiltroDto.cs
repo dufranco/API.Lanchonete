@@ -1,12 +1,10 @@
-﻿namespace API.Lanchonete.Domain.DTO
+﻿using API.Lanchonete.Domain.DTO.Abstract;
+
+namespace API.Lanchonete.Domain.DTO
 {
-    public class PerfilFiltroDto
+    public class PerfilFiltroDto : FiltroBase
     {
-        public string? FiltroNome { get; set; } = null;
-        public string? FiltroDescricao { get; set; } = null;
-        public int? OrdenarPor { get; set; } = 0;
-        public bool OrdemDesc { get; set; } = false;
-        public int Pagina { get; set; } = 1;
-        public int TamanhoPagina { get; set; } = 10;
+        public string? Nome { get; set; } = null;
+        public string? Descricao { get; set; } = null;
     }
 }

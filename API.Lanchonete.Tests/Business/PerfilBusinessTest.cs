@@ -107,7 +107,7 @@ namespace API.Lanchonete.Tests.Business
         [Fact]
         public async Task ListarPerfis_DeveRetornarListaDePerfilDto_QuandoSucesso()
         {
-            var perfilFiltro = new PerfilFiltroDto { FiltroNome = null, FiltroDescricao = null, OrdemDesc = false, OrdenarPor = 0, Pagina = 1, TamanhoPagina = 10 };
+            var perfilFiltro = new PerfilFiltroDto { Nome = null, Descricao = null, OrdemDesc = false, OrdenarPor = 0, Pagina = 1, TamanhoPagina = 10 };
             var perfisEntity = new List<Perfil>
             {
                 new() { IdPerfil = 1, Nome = "Admin", Descricao = "Administrador" },

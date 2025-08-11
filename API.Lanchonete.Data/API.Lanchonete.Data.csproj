@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\API.Lanchonete.Core\API.Lanchonete.Core.csproj" />
     <ProjectReference Include="..\API.Lanchonete.Domain\API.Lanchonete.Domain.csproj" />
   </ItemGroup>
 

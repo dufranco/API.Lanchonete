@@ -184,7 +184,7 @@ namespace API.Lanchonete.Tests.Controllers
         {
             // Arrange
             int idPerfil = 99;
-            _perfilBusinessMock.Setup(s => s.ObterPerfilPorId(idPerfil)).ReturnsAsync((PerfilDto?)null);
+            _perfilBusinessMock.Setup(s => s.ObterPerfilPorId(idPerfil)).ThrowsAsync(new KeyNotFoundException($"Perfil com ID {idPerfil} não encontrado."));
             var controller = new PerfilController(_loggerPerfilControllerMock.Object, _perfilBusinessMock.Object);
 
             // Act
@@ -193,7 +193,7 @@ namespace API.Lanchonete.Tests.Controllers
             // Assert
             var actionResult = Assert.IsType<ActionResult<PerfilDto>>(result);
             var notFound = Assert.IsType<NotFoundObjectResult>(actionResult.Result);
-            Assert.Equal("Perfil com ID 99 não encontrado.", notFound.Value);
+            Assert.Equal($"Perfil com ID {idPerfil} não encontrado.", notFound.Value);
         }
 
         [Fact]
@@ -202,8 +202,8 @@ namespace API.Lanchonete.Tests.Controllers
             // Arrange
             var perfis = new List<PerfilDto>
                 {
-                    new PerfilDto { IdPerfil = 1, Nome = "Cliente", Descricao = "Perfil de cliente" },
-                    new PerfilDto { IdPerfil = 2, Nome = "Admin", Descricao = "Perfil de administrador" }
+                    new() { IdPerfil = 1, Nome = "Cliente", Descricao = "Perfil de cliente" },
+                    new() { IdPerfil = 2, Nome = "Admin", Descricao = "Perfil de administrador" }
                 };
             _perfilBusinessMock.Setup(s => s.ListarPerfis(It.IsAny<PerfilFiltroDto>())).ReturnsAsync(perfis);
             var controller = new PerfilController(_loggerPerfilControllerMock.Object, _perfilBusinessMock.Object);
@@ -222,7 +222,7 @@ namespace API.Lanchonete.Tests.Controllers
         public async Task ListarPerfis_DeveRetornarNotFound_QuandoNenhumPerfilEncontrado()
         {
             // Arrange
-            _perfilBusinessMock.Setup(s => s.ListarPerfis(It.IsAny<PerfilFiltroDto>())).ReturnsAsync(new List<PerfilDto>());
+            _perfilBusinessMock.Setup(s => s.ListarPerfis(It.IsAny<PerfilFiltroDto>())).ReturnsAsync([]);
             var controller = new PerfilController(_loggerPerfilControllerMock.Object, _perfilBusinessMock.Object);
 
             // Act
@@ -279,8 +279,8 @@ namespace API.Lanchonete.Tests.Controllers
 
             // Act
             var result = await controller.ListarPerfis(
-                filtroNome: filtroInvalido.FiltroNome,
-                filtroDescricao: filtroInvalido.FiltroDescricao,
+                filtroNome: filtroInvalido.Nome,
+                filtroDescricao: filtroInvalido.Descricao,
                 ordenarPor: filtroInvalido.OrdenarPor,
                 ordemDesc: filtroInvalido.OrdemDesc,
                 pagina: filtroInvalido.Pagina,

@@ -7,12 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Lanchonete.Data.Repositories
 {
-    public class PerfilEFRepository : EFRepositoryBase<Perfil>, IPerfilEFRepository
+    public class PerfilEFRepository(AppDbContext context) : EFRepositoryBase<Perfil>(context), IPerfilEFRepository
     {
-        public PerfilEFRepository(AppDbContext context) : base(context)
-        {
-        }
-
         public async Task<Perfil> CadastrarPerfil(PerfilDto perfil)
         {
             var entity = new Perfil
@@ -68,18 +64,18 @@ namespace API.Lanchonete.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Perfil> ObterPerfilPorId(int idPerfil)
-            => await _context.Perfis.Where(p => p.IdPerfil == idPerfil).FirstOrDefaultAsync();
+        public async Task<Perfil?> ObterPerfilPorId(int idPerfil)
+            => await _context.Perfis.FirstOrDefaultAsync(f => f.IdPerfil == idPerfil) ?? throw new KeyNotFoundException("Perfil não encontrado.");
 
         public async Task<IEnumerable<Perfil>> ListarPerfis(PerfilFiltroDto perfilFiltro)
         {
             var query = _context.Perfis.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(perfilFiltro.FiltroNome))
-                query = query.Where(p => EF.Functions.ILike(p.Nome, $"%{perfilFiltro.FiltroNome}%"));
+            if (!string.IsNullOrWhiteSpace(perfilFiltro.Nome))
+                query = query.Where(p => EF.Functions.ILike(p.Nome, $"%{perfilFiltro.Nome}%"));
 
-            if (!string.IsNullOrWhiteSpace(perfilFiltro.FiltroDescricao))
-                query = query.Where(p => EF.Functions.ILike(p.Descricao, $"%{perfilFiltro.FiltroDescricao}%"));
+            if (!string.IsNullOrWhiteSpace(perfilFiltro.Descricao))
+                query = query.Where(p => EF.Functions.ILike(p.Descricao, $"%{perfilFiltro.Descricao}%"));
 
             query = perfilFiltro.OrdenarPor switch
             {

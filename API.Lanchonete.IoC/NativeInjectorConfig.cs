@@ -12,10 +12,12 @@ namespace API.Lanchonete.IoC
         {
             #region Business
             services.AddScoped<IPerfilBusiness, PerfilBusiness>();
+            services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
             #endregion
 
             #region Repository
             services.AddScoped<IPerfilEFRepository, PerfilEFRepository>();
+            services.AddScoped<IUsuarioEFRepository, UsuarioEFRepository>();
             #endregion
 
             #region AutoMapper

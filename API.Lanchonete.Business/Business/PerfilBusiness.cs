@@ -5,16 +5,10 @@ using AutoMapper;
 
 namespace API.Lanchonete.Business.Business
 {
-    public class PerfilBusiness : IPerfilBusiness
+    public class PerfilBusiness(IMapper mapper, IPerfilEFRepository perfilEFRepository) : IPerfilBusiness
     {
-        private readonly IMapper _mapper;
-        private readonly IPerfilEFRepository _perfilRepository;
-
-        public PerfilBusiness(IMapper mapper, IPerfilEFRepository perfilEFRepository)
-        {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _perfilRepository = perfilEFRepository ?? throw new ArgumentNullException(nameof(perfilEFRepository));
-        }
+        private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        private readonly IPerfilEFRepository _perfilRepository = perfilEFRepository ?? throw new ArgumentNullException(nameof(perfilEFRepository));
 
         public async Task<PerfilDto> CadastrarPerfil(PerfilDto perfil)
             => _mapper.Map<PerfilDto>(await _perfilRepository.CadastrarPerfil(perfil));

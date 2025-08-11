@@ -1,7 +1,7 @@
 using API.Lanchonete.Domain.DTO;
 using FluentValidation;
 
-namespace API.Lanchonete.Domain.Validation
+namespace API.Lanchonete.Domain.Validators
 {
     public class PerfilDtoValidator : AbstractValidator<PerfilDto>
     {

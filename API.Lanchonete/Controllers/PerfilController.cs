@@ -1,6 +1,6 @@
 ﻿using API.Lanchonete.Domain.DTO;
 using API.Lanchonete.Domain.Interfaces.Business;
-using API.Lanchonete.Domain.Validation;
+using API.Lanchonete.Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -9,16 +9,10 @@ namespace API.Lanchonete.Controllers
 {
     [Route("lanchonete/api/[controller]")]
     [ApiController]
-    public class PerfilController : ControllerBase
+    public class PerfilController(ILogger<PerfilController> logger, IPerfilBusiness perfilBusiness) : ControllerBase
     {
-        private readonly ILogger<PerfilController> _logger;
-        private readonly IPerfilBusiness _perfilBusiness;
-
-        public PerfilController(ILogger<PerfilController> logger, IPerfilBusiness perfilBusiness)
-        {
-            _logger = logger;
-            _perfilBusiness = perfilBusiness;
-        }
+        private readonly ILogger<PerfilController> _logger = logger;
+        private readonly IPerfilBusiness _perfilBusiness = perfilBusiness;
 
         [HttpPost("Cadastrar")]
         public async Task<ActionResult<PerfilDto>> CadastrarPerfil([FromBody][Required] PerfilDto perfil)
@@ -54,7 +48,7 @@ namespace API.Lanchonete.Controllers
         [HttpPut("Atualizar")]
         public async Task<ActionResult> AtualizarPerfil([FromBody][Required] PerfilDto perfil)
         {
-            var erro = "Erro ao atualizar perfil: {Message}";
+            const string erro = "Erro ao atualizar perfil: {Message}";
 
             try
             {
@@ -129,15 +123,14 @@ namespace API.Lanchonete.Controllers
             {
                 _logger.LogInformation("Obtenção de perfil iniciada.");
                 var perfil = await _perfilBusiness.ObterPerfilPorId(idPerfil);
-
-                if (perfil == null)
-                {
-                    _logger.LogWarning("Perfil não encontrado: {IdPerfil}", idPerfil);
-                    return NotFound($"Perfil com ID {idPerfil} não encontrado.");
-                }
-
                 _logger.LogInformation("Perfil obtido com sucesso: {PerfilId}", perfil.IdPerfil);
+
                 return Ok(perfil);
+            }
+            catch (KeyNotFoundException knfEx)
+            {
+                _logger.LogWarning(knfEx, "Perfil não encontrado: {IdPerfil}", idPerfil);
+                return NotFound(knfEx.Message);
             }
             catch (Exception ex)
             {
@@ -160,8 +153,8 @@ namespace API.Lanchonete.Controllers
                 _logger.LogInformation("Listagem de perfis iniciada.");
                 var perfilFiltro = new PerfilFiltroDto
                 {
-                    FiltroNome = filtroNome,
-                    FiltroDescricao = filtroDescricao,
+                    Nome = filtroNome,
+                    Descricao = filtroDescricao,
                     OrdenarPor = ordenarPor,
                     OrdemDesc = ordemDesc,
                     Pagina = pagina,

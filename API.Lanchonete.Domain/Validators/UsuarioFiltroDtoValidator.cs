@@ -3,22 +3,22 @@ using FluentValidation;
 
 namespace API.Lanchonete.Domain.Validators
 {
-    public class PerfilFiltroDtoValidator : AbstractValidator<PerfilFiltroDto>
+    public class UsuarioFiltroDtoValidator : AbstractValidator<UsuarioFiltroDto>
     {
-        public PerfilFiltroDtoValidator()
+        public UsuarioFiltroDtoValidator()
         {
             RuleFor(x => x.Nome)
                 .MaximumLength(50)
                 .WithMessage("O filtro Nome deve ter no máximo 50 caracteres.");
 
-            RuleFor(x => x.Descricao)
+            RuleFor(x => x.Email)
                 .MaximumLength(100)
-                .WithMessage("O filtro Descrição deve ter no máximo 100 caracteres.");
+                .WithMessage("O filtro E-mail deve ter no máximo 100 caracteres.");
 
             RuleFor(x => x.OrdenarPor)
-                .InclusiveBetween(0, 2)
+                .InclusiveBetween(0, 3)
                 .When(x => x.OrdenarPor.HasValue)
-                .WithMessage("A ordenação deve estar entre 0 e 2.");
+                .WithMessage("A ordenação deve estar entre 0 e 3.");
 
             RuleFor(x => x.Pagina)
                 .GreaterThan(0)

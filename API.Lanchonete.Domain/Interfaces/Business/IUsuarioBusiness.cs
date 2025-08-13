@@ -1,5 +1,5 @@
-﻿using API.Lanchonete.Domain.DTO;
-using API.Lanchonete.Domain.DTO.Request;
+﻿using API.Lanchonete.Domain.DTO.Request;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.DTO.Response;
 
 namespace API.Lanchonete.Domain.Interfaces.Business

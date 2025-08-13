@@ -1,4 +1,5 @@
 ﻿using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 
 namespace API.Lanchonete.Domain.Interfaces.Business
 {

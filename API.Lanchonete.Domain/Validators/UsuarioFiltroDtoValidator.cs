@@ -1,4 +1,4 @@
-using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using FluentValidation;
 
 namespace API.Lanchonete.Domain.Validators
@@ -9,11 +9,15 @@ namespace API.Lanchonete.Domain.Validators
         {
             RuleFor(x => x.Nome)
                 .MaximumLength(50)
-                .WithMessage("O filtro Nome deve ter no máximo 50 caracteres.");
+                .WithMessage("O nome deve ter no máximo 50 caracteres.");
 
             RuleFor(x => x.Email)
                 .MaximumLength(100)
-                .WithMessage("O filtro E-mail deve ter no máximo 100 caracteres.");
+                .WithMessage("O e-mail deve ter no máximo 100 caracteres.");
+
+            RuleFor(x => x.DescricaoPerfil)
+                .MaximumLength(100)
+                .WithMessage("O perfil deve ter no máximo 100 caracteres.");
 
             RuleFor(x => x.OrdenarPor)
                 .InclusiveBetween(0, 3)

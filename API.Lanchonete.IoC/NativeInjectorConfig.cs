@@ -12,11 +12,13 @@ namespace API.Lanchonete.IoC
         {
             #region Business
             services.AddScoped<IPerfilBusiness, PerfilBusiness>();
+            services.AddScoped<IProdutoBusiness, ProdutoBusiness>();
             services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
             #endregion
 
             #region Repository
             services.AddScoped<IPerfilEFRepository, PerfilEFRepository>();
+            services.AddScoped<IProdutoEFRepository, ProdutoEFRepository>();
             services.AddScoped<IUsuarioEFRepository, UsuarioEFRepository>();
             #endregion
 

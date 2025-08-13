@@ -1,6 +1,6 @@
 ﻿using API.Lanchonete.Controllers;
-using API.Lanchonete.Domain.DTO;
 using API.Lanchonete.Domain.DTO.Request;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.DTO.Response;
 using API.Lanchonete.Domain.Interfaces.Business;
 using FluentValidation.Results;

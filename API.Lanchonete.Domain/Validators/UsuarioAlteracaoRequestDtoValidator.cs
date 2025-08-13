@@ -7,6 +7,10 @@ namespace API.Lanchonete.Domain.Validators
     {
         public UsuarioAlteracaoRequestDtoValidator()
         {
+            RuleFor(x => x.IdUsuario)
+               .GreaterThan(0)
+               .WithMessage("O identificador do usuário é obrigatório.");
+
             RuleFor(x => x.Nome)
                 .NotEmpty().WithMessage("O nome é obrigatório.")
                 .MinimumLength(2).WithMessage("O nome deve ter no mínimo 2 caracteres.")

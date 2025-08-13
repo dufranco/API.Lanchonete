@@ -1,4 +1,4 @@
-using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using FluentValidation;
 
 namespace API.Lanchonete.Domain.Validators

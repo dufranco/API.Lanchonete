@@ -1,6 +1,7 @@
 ﻿using API.Lanchonete.Core.Utils;
 using API.Lanchonete.Domain.DTO;
 using API.Lanchonete.Domain.DTO.Request;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.DTO.Response;
 using API.Lanchonete.Domain.Interfaces.Business;
 using API.Lanchonete.Domain.Validators;

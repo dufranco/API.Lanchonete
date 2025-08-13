@@ -1,6 +1,6 @@
 ﻿using API.Lanchonete.Domain.DTO.Abstract;
 
-namespace API.Lanchonete.Domain.DTO
+namespace API.Lanchonete.Domain.DTO.Request.Filtro
 {
     public class PerfilFiltroDto : FiltroBase
     {

@@ -1,6 +1,7 @@
 ﻿using API.Lanchonete.Data.Context;
 using API.Lanchonete.Data.Repositories;
 using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Moq;

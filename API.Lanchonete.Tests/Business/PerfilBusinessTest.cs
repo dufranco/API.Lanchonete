@@ -1,5 +1,6 @@
 ﻿using API.Lanchonete.Business.Business;
 using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.Entities;
 using API.Lanchonete.Domain.Interfaces.Repositories;
 using AutoMapper;

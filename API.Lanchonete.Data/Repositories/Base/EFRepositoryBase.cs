@@ -1,18 +1,14 @@
 ﻿using API.Lanchonete.Data.Context;
 using API.Lanchonete.Domain.Interfaces.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace API.Lanchonete.Data.Repositories.Base
 {
-    public abstract class EFRepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
+    public abstract class EFRepositoryBase<TEntity>(AppDbContext context) : IRepositoryBase<TEntity> where TEntity : class
     {
-        protected readonly AppDbContext _context;
+        protected readonly AppDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
         private bool _disposed = false;
-
-        protected EFRepositoryBase(AppDbContext context)
-        {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-        }
 
         ~EFRepositoryBase() => Dispose(false);
 
@@ -57,5 +53,7 @@ namespace API.Lanchonete.Data.Repositories.Base
             _context.Set<TEntity>().Remove(entity);
             await SaveChangesAsync();
         }
+
+        public virtual async Task<IDbContextTransaction> BeginTransactionAsync() => await _context.Database.BeginTransactionAsync();        
     }
 }

@@ -68,6 +68,7 @@ namespace API.Lanchonete.Tests.Repositories
             await _repository.AtualizarUsuario(usuario);
 
             var atualizado = await _context.Usuarios.FindAsync(usuario.IdUsuario);
+            Assert.NotNull(atualizado);
             Assert.Equal("Atualizado", atualizado.Nome);
             Assert.Equal("atualizado@email.com", atualizado.Email);
             Assert.Equal("newhash", atualizado.SenhaHash);

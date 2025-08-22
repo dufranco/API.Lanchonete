@@ -11,6 +11,7 @@ namespace API.Lanchonete.IoC
         public static void RegisterServices(this IServiceCollection services)
         {
             #region Business
+            services.AddScoped<IControleAcessoBusiness, ControleAcessoBusiness>();
             services.AddScoped<IPedidoBusiness, PedidoBusiness>();
             services.AddScoped<IPerfilBusiness, PerfilBusiness>();
             services.AddScoped<IProdutoBusiness, ProdutoBusiness>();
@@ -18,6 +19,7 @@ namespace API.Lanchonete.IoC
             #endregion
 
             #region Repository
+            services.AddScoped<IControleAcessoEFRepository, ControleAcessoEFRepository>();
             services.AddScoped<IItensPedidoEFRepository, ItensPedidoEFRepository>();
             services.AddScoped<IPedidoEFRepository, PedidoEFRepository>();
             services.AddScoped<IPerfilEFRepository, PerfilEFRepository>();

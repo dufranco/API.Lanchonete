@@ -11,5 +11,6 @@ namespace API.Lanchonete.Domain.Interfaces.Repositories
         Task ExcluirUsuario(int idUsuario);
         Task<Usuario> ObterUsuarioPorId(int idUsuario);
         Task<IEnumerable<Usuario>> ListarUsuarios(UsuarioFiltroDto usuarioFiltro);
+        Task<Usuario?> ObterUsuarioPorEmail(string email);
     }
 }

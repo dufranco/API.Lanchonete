@@ -7,6 +7,7 @@ using API.Lanchonete.Domain.Interfaces.Business;
 using API.Lanchonete.Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -195,6 +196,40 @@ namespace API.Lanchonete.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao listar usuários: {Message}", $"{ex.Message}{Environment.NewLine}{ex.InnerException}");
+                return Problem(MensagensPadrao.ErroGenerico);
+            }
+        }
+
+        [HttpPost("autenticar")]
+        public async Task<ActionResult> Autenticar([Required][FromBody] LoginRequestDto login)
+        {
+            try
+            {
+                _logger.LogInformation("Autenticação de usuário iniciada.");
+                var validationResult = new LoginRequestDtoValidator().Validate(login);
+
+                if (!validationResult.IsValid)
+                {
+                    _logger.LogWarning("Falha na requisição: {Errors}", validationResult.Errors);
+                    return BadRequest(validationResult.Errors);
+                }
+
+                login.SenhaCriptografada = Encoding.UTF8.GetString(Convert.FromBase64String(login.Senha!)).ToSecureString();
+                login.Senha = null;
+
+                var token = await _usuarioBusiness.AutenticarUsuario(login);
+                _logger.LogInformation("Usuário autenticado com sucesso.");
+
+                return Ok(token.Token);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogWarning(ex.Message, login);
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao autenticar usuário: {Message}", $"{ex.Message}{Environment.NewLine}{ex.InnerException}");
                 return Problem(MensagensPadrao.ErroGenerico);
             }
         }

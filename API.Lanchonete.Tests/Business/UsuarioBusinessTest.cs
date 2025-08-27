@@ -6,12 +6,14 @@ using API.Lanchonete.Domain.DTO.Response;
 using API.Lanchonete.Domain.Entities;
 using API.Lanchonete.Domain.Interfaces.Repositories;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Moq;
 
 namespace API.Lanchonete.Tests.Business
 {
     public class UsuarioBusinessTest
     {
+        private readonly Mock<IConfiguration> _configurationMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IUsuarioEFRepository> _usuarioRepoMock;
         private readonly UsuarioBusiness _usuarioBusiness;
@@ -20,7 +22,8 @@ namespace API.Lanchonete.Tests.Business
         {
             _mapperMock = new Mock<IMapper>();
             _usuarioRepoMock = new Mock<IUsuarioEFRepository>();
-            _usuarioBusiness = new UsuarioBusiness(_mapperMock.Object, _usuarioRepoMock.Object);
+            _configurationMock = new Mock<IConfiguration>();
+            _usuarioBusiness = new UsuarioBusiness(_configurationMock.Object, _mapperMock.Object, _usuarioRepoMock.Object);
         }
 
         [Fact]

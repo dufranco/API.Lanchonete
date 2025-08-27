@@ -81,9 +81,6 @@ namespace API.Lanchonete.Data.Repositories
                             .Include(p => p.IdPerfilNavigation)
                             .AsQueryable();
 
-            // Substitua o uso de EF.Functions.ILike por ToLower().Contains para consultas case-insensitive.
-            // Isso é compatível com bancos que não suportam ILike nativamente (ex: SQL Server).
-
             if (!string.IsNullOrWhiteSpace(usuarioFiltro.Nome))
                 query = query.Where(p => p.Nome.ToLower().Contains(usuarioFiltro.Nome.ToLower()));
 
@@ -92,15 +89,6 @@ namespace API.Lanchonete.Data.Repositories
 
             if (!string.IsNullOrWhiteSpace(usuarioFiltro.DescricaoPerfil))
                 query = query.Where(p => p.IdPerfilNavigation.Descricao.ToLower().Contains(usuarioFiltro.DescricaoPerfil.ToLower()));
-
-            //if (!string.IsNullOrWhiteSpace(usuarioFiltro.Nome))
-            //    query = query.Where(p => EF.Functions.ILike(p.Nome, $"%{usuarioFiltro.Nome}%"));
-            //
-            //if (!string.IsNullOrWhiteSpace(usuarioFiltro.Email))
-            //    query = query.Where(p => EF.Functions.ILike(p.Email, $"%{usuarioFiltro.Email}%"));
-            //
-            //if (!string.IsNullOrWhiteSpace(usuarioFiltro.DescricaoPerfil))
-            //    query = query.Where(p => EF.Functions.ILike(p.IdPerfilNavigation.Descricao, $"%{usuarioFiltro.DescricaoPerfil}%"));
 
             query = usuarioFiltro.OrdenarPor switch
             {
@@ -114,5 +102,8 @@ namespace API.Lanchonete.Data.Repositories
 
             return result.Count != 0 ? result : throw new KeyNotFoundException("Nenhum usuário encontrado.");
         }
+
+        public async Task<Usuario?> ObterUsuarioPorEmail(string email)
+            => await _context.Usuarios.Include(p => p.IdPerfilNavigation).Where(p => p.Email == email).FirstOrDefaultAsync();
     }
 }

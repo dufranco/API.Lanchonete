@@ -11,5 +11,6 @@ namespace API.Lanchonete.Domain.Interfaces.Business
         Task ExcluirUsuario(int idUsuario);
         Task<UsuarioCadastroResponseDto> ObterUsuarioPorId(int idUsuario);
         Task<IEnumerable<UsuarioCadastroResponseDto>> ListarUsuarios(UsuarioFiltroDto usuarioFiltro);
+        Task<LoginResponseDto> AutenticarUsuario(LoginRequestDto usuarioLogin);
     }
 }

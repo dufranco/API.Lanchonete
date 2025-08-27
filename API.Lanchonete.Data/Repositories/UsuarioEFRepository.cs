@@ -104,6 +104,6 @@ namespace API.Lanchonete.Data.Repositories
         }
 
         public async Task<Usuario?> ObterUsuarioPorEmail(string email)
-            => await _context.Usuarios.Include(p => p.IdPerfilNavigation).Where(p => p.Email == email).FirstOrDefaultAsync();
+            => await _context.Usuarios.Include(p => p.IdPerfilNavigation).ThenInclude(p => p.ControleAcessos).Where(p => p.Email == email).FirstOrDefaultAsync();
     }
 }

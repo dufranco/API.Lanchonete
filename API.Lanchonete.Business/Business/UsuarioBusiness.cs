@@ -75,15 +75,13 @@ namespace API.Lanchonete.Business.Business
                 new System.Security.Claims.Claim("Email", usuario.Email),
                 new System.Security.Claims.Claim("IdPerfil", usuario.IdPerfil.ToString()),
                 new System.Security.Claims.Claim("NomePerfil", usuario.NomePerfil ?? string.Empty),
-                //new System.Security.Claims.Claim("TelasPermitidas", usuario.ControleAcessos.Count != 0 ? string.Join(';', usuario.ControleAcessos.Where(w => w.Permitido == true).Select(x => x.NomeTela)) : string.Empty)
+                new System.Security.Claims.Claim("TelasPermitidas", usuario.ControleAcessos.Count != 0 ? string.Join(';', usuario.ControleAcessos.Where(w => w.Permitido == true).Select(x => x.NomeTela)) : string.Empty)
             };
 
             var jwtSecretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("Jwt:SecretKey não encontrada na configuração.");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                    //issuer: _configuration["Jwt:Issuer"] ?? "LanchoneteAPI",
-                    //audience: _configuration["Jwt:Audience"] ?? "LanchoneteAPI",
                     claims: claims,
                     expires: DateTime.Now.AddHours(Convert.ToDouble(_configuration["Jwt:ExpireHours"] ?? "2")),
                     signingCredentials: creds

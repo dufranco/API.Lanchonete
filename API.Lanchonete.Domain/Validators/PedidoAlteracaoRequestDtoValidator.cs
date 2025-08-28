@@ -5,7 +5,7 @@ namespace API.Lanchonete.Domain.Validators
 {
     public class PedidoAlteracaoRequestDtoValidator : AbstractValidator<PedidoAlteracaoRequestDto>
     {
-        private static readonly string[] statusPermitidos = ["pendente", "em_preparo", "pronto", "entregue"];
+        private static readonly List<string> statusPermitidos = new List<string> { "pendente", "em_preparo", "pronto", "entregue" };
 
         public PedidoAlteracaoRequestDtoValidator()
         {

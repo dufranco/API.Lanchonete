@@ -33,13 +33,13 @@ namespace API.Lanchonete.Business.Business
                     IdPedido = pedidoResult.IdPedido,
                     IdUsuario = pedidoResult.IdUsuario,
                     Status = pedidoResult.Status,
-                    ItensPedido = [.. itensResult.Select(i => new ItemPedidoCadastroResponseDto
+                    ItensPedido = itensResult.Select(i => new ItemPedidoCadastroResponseDto
                     {
                         IdItem = i.IdItem,
                         IdProduto = i.IdProduto,
                         Quantidade = i.Quantidade,
                         Status = i.Status,
-                    })]
+                    }).ToList()
                 };
             }
             catch (DbUpdateException)
@@ -145,21 +145,21 @@ namespace API.Lanchonete.Business.Business
         }
 
         private static List<ItensPedido> PedidoCadastroRequestDtoToItensPedidoList(List<ItemPedidoCadastroRequestDto> pedidoAlteracao, int idPedido)
-            => [.. pedidoAlteracao.Select(ip => new ItensPedido()
+            => pedidoAlteracao.Select(ip => new ItensPedido()
                {
                     IdPedido = idPedido,
                     IdProduto = ip.IdProduto,
                     Quantidade = ip.Quantidade,
-               })];
+               }).ToList();
 
         private static List<ItensPedido> PedidoAlteracaoRequestDtoToItensPedidoList(PedidoAlteracaoRequestDto pedidoAlteracao)
-            => [.. pedidoAlteracao.ItensPedido.Select(ip => new ItensPedido()
+            => pedidoAlteracao.ItensPedido.Select(ip => new ItensPedido()
                {
                     IdItem = ip.IdItem,
                     IdPedido = pedidoAlteracao.IdPedido,
                     IdProduto = ip.IdProduto,
                     Quantidade = ip.Quantidade,
                     Status = ip.Status,
-               })];
+               }).ToList();
     }
 }

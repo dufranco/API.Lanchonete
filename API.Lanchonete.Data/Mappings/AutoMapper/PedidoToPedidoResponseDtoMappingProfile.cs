@@ -18,16 +18,14 @@ namespace API.Lanchonete.Data.Mappings.AutoMapper
         }
 
         private static List<ItemPedidoResponseDto> ItensPedidoToItemPedidoListagemResponseDtoList(List<ItensPedido> itensPedido)
-            => [
-                ..itensPedido.Select(ip => new ItemPedidoResponseDto()
-                    {
-                        IdItem = ip.IdItem,
-                        IdProduto = ip.IdProduto,
-                        DescricaoProduto = ip.IdProdutoNavigation.Nome,
-                        Quantidade = ip.Quantidade,
-                        Status = ip.Status
-                    }
-                )
-            ];
+            => itensPedido.Select(ip => new ItemPedidoResponseDto()
+                   {
+                       IdItem = ip.IdItem,
+                       IdProduto = ip.IdProduto,
+                       DescricaoProduto = ip.IdProdutoNavigation.Nome,
+                       Quantidade = ip.Quantidade,
+                       Status = ip.Status
+                   }
+               ).ToList();
     }
 }

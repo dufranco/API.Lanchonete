@@ -2,6 +2,7 @@
 using API.Lanchonete.Domain.DTO.Request;
 using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.DTO.Response;
+using API.Lanchonete.Domain.Entities;
 using API.Lanchonete.Domain.Interfaces.Business;
 using API.Lanchonete.Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
@@ -92,16 +93,16 @@ namespace API.Lanchonete.Controllers
         }
 
         [HttpPost("{idPedido}/item")]
-        public async Task<ActionResult> IncluirItemPedido([Required] int idPedido, [Required][FromBody] ItemPedidoRequestDto itemPedido)
+        public async Task<ActionResult<ItemPedidoCadastroResponseDto>> IncluirItemPedido([Required] int idPedido, [Required][FromBody] ItemPedidoRequestDto itemPedido)
         {
             try
             {
                 _logger.LogInformation("Inclusão de item de pedido iniciada.");
                 itemPedido.IdPedido = idPedido;
-                await _pedidoBusiness.IncluirItemPedido(itemPedido);
+                var result = await _pedidoBusiness.IncluirItemPedido(itemPedido);
                 _logger.LogInformation("Pedido excluído com sucesso.");
 
-                return NoContent();
+                return Ok(result);
             }
             catch (InvalidOperationException knfEx)
             {

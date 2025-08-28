@@ -8,7 +8,7 @@ namespace API.Lanchonete.Domain.Interfaces.Business
     {
         Task<PedidoCadastroResponseDto> CadastrarPedido(PedidoCadastroRequestDto pedidoCadastro);
         Task AtualizarPedido(PedidoAlteracaoRequestDto pedidoAlteracao);
-        Task IncluirItemPedido(ItemPedidoRequestDto itemPedido);
+        Task<ItemPedidoCadastroResponseDto> IncluirItemPedido(ItemPedidoRequestDto itemPedido);
         Task ExcluirItemPedido(int idItem, int idPedido);
         Task ExcluirPedido(int idPedido);
         Task<PedidoResponseDto> ObterPedidoPorId(int idPedido);

@@ -8,7 +8,7 @@ namespace API.Lanchonete.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<ItensPedido>> CadastrarItensPedido(List<ItensPedido> itensPedido);
         Task AtualizarItensPedido(List<ItensPedido> itensPedido);
-        Task IncluirItemPedido(ItensPedido itemPedido);
+        Task<ItensPedido> IncluirItemPedido(ItensPedido itemPedido);
         Task ExcluirItemPedido(int idItem, int idPedido);
         Task ExcluirItensPedido(int idPedido);
     }

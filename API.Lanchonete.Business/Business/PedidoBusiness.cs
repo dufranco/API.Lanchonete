@@ -76,13 +76,14 @@ namespace API.Lanchonete.Business.Business
             }
         }
 
-        public async Task IncluirItemPedido(ItemPedidoRequestDto itemPedido)
+        public async Task<ItemPedidoCadastroResponseDto> IncluirItemPedido(ItemPedidoRequestDto itemPedido)
         {
             var transaction = await _pedidoEFRepository.BeginTransactionAsync();
+            var result = (ItemPedidoCadastroResponseDto)null;
 
             try
             {
-                await _itensPedidoEFRepository.IncluirItemPedido(_mapper.Map<ItensPedido>(itemPedido));
+                result = _mapper.Map<ItemPedidoCadastroResponseDto>(await _itensPedidoEFRepository.IncluirItemPedido(_mapper.Map<ItensPedido>(itemPedido)));
                 await transaction.CommitAsync();
             }
             catch (DbUpdateException)
@@ -95,6 +96,8 @@ namespace API.Lanchonete.Business.Business
                 await transaction.RollbackAsync();
                 throw new Exception($"Erro ao incluir o produto {itemPedido.IdProduto} no pedido {itemPedido.IdPedido}.", ex);
             }
+
+            return result;
         }
 
         public async Task ExcluirItemPedido(int idItem, int idPedido)

@@ -55,7 +55,7 @@ namespace API.Lanchonete.Data.Repositories
             }
         }
 
-        public async Task IncluirItemPedido(ItensPedido itemPedido)
+        public async Task<ItensPedido> IncluirItemPedido(ItensPedido itemPedido)
         {
             _ = await _context.Pedidos.FindAsync(itemPedido.IdPedido) ?? throw new KeyNotFoundException($"O pedido {itemPedido.IdPedido} não foi encontrado.");
             var itemExistente = await _context.ItensPedido.AnyAsync(a => a.IdPedido == itemPedido.IdPedido && a.IdProduto == itemPedido.IdProduto);
@@ -76,6 +76,8 @@ namespace API.Lanchonete.Data.Repositories
 
                 throw;
             }
+
+            return itemPedido;
         }
 
         public async Task ExcluirItemPedido(int idItem, int idPedido)

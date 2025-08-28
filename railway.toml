@@ -1,0 +1,4 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "./API.Lanchonete/Dockerfile"
+dockerContext = "./API.Lanchonete"

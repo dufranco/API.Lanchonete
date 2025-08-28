@@ -11,6 +11,9 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 #endif
 
+if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")))
+    throw new InvalidOperationException("A variável de ambiente 'POSTGRES_CONNECTION' não está definida.");
+
 builder.Services.AddHealthChecks();
 
 builder.Services.AddControllers(options =>
@@ -19,7 +22,7 @@ builder.Services.AddControllers(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration["ConnectionStrings:PostgresConnection"]));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION")));
 builder.Services.RegisterServices();
 
 var app = builder.Build();

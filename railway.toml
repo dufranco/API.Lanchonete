@@ -4,6 +4,7 @@ dockerfilePath = "./API.Lanchonete/Dockerfile"
 dockerContext = "./API.Lanchonete"
 
 [deploy]
-startCommand = "./API.Lanchonete"
+startCommand = "dotnet API.Lanchonete.dll"
 restartPolicyType = "always"
 healthcheckPath = "/health"
+healthcheckTimeout = 100

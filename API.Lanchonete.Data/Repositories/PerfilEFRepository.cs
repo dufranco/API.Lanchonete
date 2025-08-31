@@ -73,10 +73,10 @@ namespace API.Lanchonete.Data.Repositories
             var query = _context.Perfis.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(perfilFiltro.Nome))
-                query = query.Where(p => EF.Functions.ILike(p.Nome, $"%{perfilFiltro.Nome}%"));
+                query = query.Where(p => p.Nome.ToLower().Contains($"{perfilFiltro.Nome}"));
 
             if (!string.IsNullOrWhiteSpace(perfilFiltro.Descricao))
-                query = query.Where(p => EF.Functions.ILike(p.Descricao, $"%{perfilFiltro.Descricao}%"));
+                query = query.Where(p => p.Descricao.ToLower().Contains($"{perfilFiltro.Descricao}"));
 
             query = perfilFiltro.OrdenarPor switch
             {

@@ -1,6 +1,7 @@
 ﻿using API.Lanchonete.Data.Context;
 using API.Lanchonete.Data.Repositories;
 using API.Lanchonete.Domain.DTO;
+using API.Lanchonete.Domain.DTO.Request.Filtro;
 using API.Lanchonete.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ namespace API.Lanchonete.Tests.Repositories
         }
 
         [Fact]
-        public async Task CadastrarPerfil_Success()
+        public async Task CadastrarPerfil_DeveRetornarSucesso_QuandoPerfilForValido()
         {
             var repo = new PerfilEFRepository(_context);
             var dto = new PerfilDto { Nome = "Admin", Descricao = "Administrador" };
@@ -95,6 +96,42 @@ namespace API.Lanchonete.Tests.Repositories
             {
                 await repo.ExcluirPerfil(perfil.IdPerfil);
             });
+        }
+
+        [Fact]
+        public async Task ObterPerfilPorId_DeveRetornarSucesso_QuandoPerfilExistir()
+        {
+            var repo = new PerfilEFRepository(_context);
+            var dto = new PerfilDto { Nome = "Buscar", Descricao = "Buscar" };
+            var perfil = await repo.CadastrarPerfil(dto);
+
+            var result = await repo.ObterPerfilPorId(perfil.IdPerfil);
+
+            Assert.NotNull(result);
+            Assert.Equal(perfil.IdPerfil, result!.IdPerfil);
+        }
+
+        [Fact]
+        public async Task ObterPerfilPorId_DeveRetornarFalha_QuandoPerfilNaoExistir()
+        {
+            var repo = new PerfilEFRepository(_context);
+
+            await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+            {
+                await repo.ObterPerfilPorId(999);
+            });
+        }
+
+        [Fact]
+        public async Task ListarPerfis_DeveRetornarSucesso_QuandoNaoHouverPerfis()
+        {
+            var repo = new PerfilEFRepository(_context);
+            var filtro = new PerfilFiltroDto { Nome = "Inexistente" };
+
+            var result = await repo.ListarPerfis(filtro);
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
         }
     }
 }

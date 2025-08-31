@@ -102,7 +102,7 @@ namespace API.Lanchonete.Controllers
                 var result = await _pedidoBusiness.IncluirItemPedido(itemPedido);
                 _logger.LogInformation("Pedido excluído com sucesso.");
 
-                return Ok(result);
+                return Created(string.Empty, result);
             }
             catch (InvalidOperationException knfEx)
             {

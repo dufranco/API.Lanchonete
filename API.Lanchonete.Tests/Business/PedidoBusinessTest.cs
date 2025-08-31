@@ -201,15 +201,28 @@ namespace API.Lanchonete.Tests.Business
             // Arrange
             var request = new ItemPedidoRequestDto { IdProduto = 1, Quantidade = 2, IdPedido = 1 };
             var itemPedido = new ItensPedido { IdItem = 1, IdPedido = 1, IdProduto = 1, Quantidade = 2 };
+            var response = new ItemPedidoCadastroResponseDto
+            {
+                IdItem = 1,
+                IdProduto = 1,
+                Quantidade = 2,
+                Status = "Novo"
+            };
 
             _pedidoRepoMock.Setup(x => x.BeginTransactionAsync()).ReturnsAsync(_transactionMock.Object);
             _mapperMock.Setup(x => x.Map<ItensPedido>(request)).Returns(itemPedido);
-            _itensPedidoRepoMock.Setup(x => x.IncluirItemPedido(It.IsAny<ItensPedido>())).Returns(Task.CompletedTask);
+            _itensPedidoRepoMock.Setup(x => x.IncluirItemPedido(It.IsAny<ItensPedido>())).ReturnsAsync(itemPedido);
+            _mapperMock.Setup(x => x.Map<ItemPedidoCadastroResponseDto>(itemPedido)).Returns(response);
 
             // Act
-            await _pedidoBusiness.IncluirItemPedido(request);
+            var result = await _pedidoBusiness.IncluirItemPedido(request);
 
             // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.IdItem);
+            Assert.Equal(1, result.IdProduto);
+            Assert.Equal(2, result.Quantidade);
+            Assert.Equal("Novo", result.Status);
             _itensPedidoRepoMock.Verify(x => x.IncluirItemPedido(It.IsAny<ItensPedido>()), Times.Once);
             _transactionMock.Verify(x => x.CommitAsync(default), Times.Once);
         }
